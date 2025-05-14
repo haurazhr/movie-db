@@ -1,7 +1,8 @@
-<div align="center" style="margin-top: 30px;">
+<div style="margin-bottom: 20px;">
   <h2 style="margin-bottom: 0;">Nama: Haura Zahra</h2>
   <p style="margin-top: 5px;">NIM: 2301093014</p>
 </div>
+
 
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
