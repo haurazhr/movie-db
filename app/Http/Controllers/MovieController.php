@@ -54,6 +54,15 @@ class MovieController extends Controller
     return redirect('/')->with('success', 'Movie berhasil ditambahkan!');
 }
 
+public function logout(Request $request)
+{
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/login');
+}
+
+
 
 
 }
