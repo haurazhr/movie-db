@@ -62,6 +62,58 @@ public function logout(Request $request)
     return redirect('/login');
 }
 
+public function dataMoviePage()
+{
+    $movies = Movie::with('category')->get();
+    $categories = Category::all(); // TAMBAHKAN INI
+    return view('admin.data_movie', compact('movies', 'categories'));
+}
+
+// Tampilkan form edit
+public function edit($id)
+{
+    $movie = Movie::findOrFail($id);
+    $categories = Category::all();
+    return view('movie_edit', compact('movie', 'categories'));
+}
+
+// Proses update data
+public function update(Request $request, $id)
+{
+    $movie = Movie::findOrFail($id);
+
+    $validated = $request->validate([
+        'title' => 'required|max:255',
+        'synopsis' => 'required',
+        'category_id' => 'required|exists:categories,id',
+        'year' => 'required|integer|min:1900|max:' . date('Y'),
+        'actors' => 'required|string',
+        'cover_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+    ]);
+
+    // Proses update cover image jika ada file baru
+    if ($request->hasFile('cover_image')) {
+        // Hapus gambar lama kalau ada
+        if ($movie->cover_image && file_exists(public_path($movie->cover_image))) {
+            unlink(public_path($movie->cover_image));
+        }
+
+        $cover = $request->file('cover_image');
+        $fileName = time() . '_' . $cover->getClientOriginalName();
+        $cover->move(public_path('covers'), $fileName);
+
+        $validated['cover_image'] = 'covers/' . $fileName;
+    }
+
+    $validated['slug'] = Str::slug($request->title);
+
+    $movie->update($validated);
+
+    return redirect()->route('movie.data')->with('success', 'Movie berhasil diperbarui!');
+}
+
+
+
 
 
 

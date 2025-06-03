@@ -6,6 +6,14 @@
 
 {{-- form movie --}}
 <h1>Form Data Movie</h1>
+
+ <div class="mb-3 row">
+    <div class="col-sm-10">
+        <a href="{{ route('movie.data') }}" class="btn btn-primary">Data Movie</a>
+    </div>
+</div>
+
+
 <form action="/movie/store" method="POST" enctype="multipart/form-data">
     @csrf {{-- Jangan lupa token CSRF untuk keamanan --}}
 
