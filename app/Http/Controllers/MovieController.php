@@ -112,6 +112,21 @@ public function update(Request $request, $id)
     return redirect()->route('movie.data')->with('success', 'Movie berhasil diperbarui!');
 }
 
+public function destroy($id)
+{
+    $movie = Movie::findOrFail($id);
+
+    // Hapus file cover jika ada
+    if ($movie->cover_image && file_exists(public_path($movie->cover_image))) {
+        unlink(public_path($movie->cover_image));
+    }
+
+    $movie->delete();
+
+    return redirect()->route('movie.data')->with('success', 'Movie berhasil dihapus!');
+}
+
+
 
 
 
