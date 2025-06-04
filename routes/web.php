@@ -1,17 +1,18 @@
 <?php
 
+use App\Http\Middleware\RoleAdmin;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MovieController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 
 
 Route::get('/', [MovieController::class, 'index']);
 
 
-Route::get('/movie/{id}/edit', [MovieController::class, 'edit'])->middleware('auth')->name('movie.edit');
-Route::put('/movie/{id}', [MovieController::class, 'update'])->middleware('auth')->name('movie.update');
+Route::get('/movie/{id}/edit', [MovieController::class, 'edit'])->middleware('auth', RoleAdmin::class)->name('movie.edit');
+Route::put('/movie/{id}', [MovieController::class, 'update'])->middleware('auth', RoleAdmin::class)->name('movie.update');
 Route::delete('/movie/{id}', [MovieController::class, 'destroy'])->middleware('auth')->name('movie.destroy');
 
 

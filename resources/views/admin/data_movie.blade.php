@@ -44,12 +44,23 @@
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-1 flex-wrap">
                             <a href="/movie/{{$movie->id}}/{{$movie->slug}}" class="btn btn-info btn-sm">Detail</a>
+                            @if(auth()->user()->role === 'admin')
                             <a href="{{ route('movie.edit', $movie->id) }}" class="btn btn-warning btn-sm">Edit</a>
+
+                            @endif
+
+                            @can('delete-movie')
                             <form action="{{ route('movie.destroy', $movie->id) }}" method="POST" onsubmit="return confirm('Are You Sure to Delete?')" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
+                                
+                            @endcan
+
+                            
+
+                            
                         </div>
                     </td>
                 </tr>

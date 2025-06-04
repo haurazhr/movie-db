@@ -114,6 +114,9 @@ public function update(Request $request, $id)
 
 public function destroy($id)
 {
+    if (Gate::allows('delete-movie')) {
+        
+    
     $movie = Movie::findOrFail($id);
 
     // Hapus file cover jika ada
@@ -124,6 +127,8 @@ public function destroy($id)
     $movie->delete();
 
     return redirect()->route('movie.data')->with('success', 'Movie berhasil dihapus!');
+    }   
+    abort(403, 'Akses ditolak! Hanya admin yang dapat mengakses halaman ini.');
 }
 
 
