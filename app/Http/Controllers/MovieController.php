@@ -6,6 +6,7 @@ use App\Models\Movie;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class MovieController extends Controller
 {
@@ -13,9 +14,16 @@ class MovieController extends Controller
     // $movies = Movie::latest()->take(9)->get(); // Ambil 9 film terbaru
     // return view('layouts.template', compact('movies'));
 
-    $movies = Movie::latest()->paginate(6);
-
+    $query  = Movie::latest();
+    if (request('q')) {
+        $query->where('title', 'like', '%' . request('q') . '%');
+    }
+    $movies = $query->paginate(6)->withQueryString();
     return view('homepage', compact('movies'));
+
+    // $movies = Movie::latest()->paginate(6);
+
+    // return view('homepage', compact('movies'));
   
   }
 
