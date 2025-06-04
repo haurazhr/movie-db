@@ -67,11 +67,17 @@
     <div class="mb-3 row">
         <label for="cover_image" class="col-sm-2 col-form-label">Cover Image</label>
         <div class="col-sm-10">
-            <input type="file" class="form-control" id="cover_image" name="cover_image" accept="image/*">
+            <input type="file" class="form-control @error('cover_image') is-invalid @enderror" id="cover_image" name="cover_image" accept="image/*">
+            @error('cover_image')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <label for="cover_image" class="col-sm-2 col-form-label">Old Image</label>
             @if ($movie->cover_image)
-                <small>Gambar saat ini:</small><br>
-                <img src="{{ asset('storage/' . $movie->cover_image) }}" alt="Cover Image" style="max-width: 150px; margin-top: 5px;">
+                <div class="mt-2">
+                    <img src="{{ asset($movie->cover_image) }}" alt="{{ $movie->title }}" alt="Cover" width="120">
+                </div>
             @endif
+            <small class="form-text text-muted">Kosongkan jika tidak ingin mengganti gambar.</small>
         </div>
     </div>
 
